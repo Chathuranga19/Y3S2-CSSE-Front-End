@@ -147,6 +147,7 @@ export default function Evaluate() {
             <label for="email">Budget</label>
             <input type="text" value={budget} className="form-control" id="email" readOnly
             />
+             <h6 className='text-danger' hidden ={budget<=100000}> Allocated Budget RS:100000 is exeeded   </h6>
             <br/>
             <label for="email">Comment</label>
             <input type="text" value={comment} className="form-control" id="email" 
