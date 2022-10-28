@@ -57,9 +57,9 @@ export default function RequestList(p) {
           <tbody>
             {SlicedAllocatedPanels.map(val =>
               <tr key={val._id}>
-                <td>{val.orderId}</td>
-                <td>{val.orderDate}</td>
-                <td>{val.siteAddress}</td>
+                <td>{val.order_id}</td>
+                <td>{val.order_date}</td>
+                <td>{val.address}</td>
                 <td>{val.budget}</td>
                 <td>{val.status}</td>
 

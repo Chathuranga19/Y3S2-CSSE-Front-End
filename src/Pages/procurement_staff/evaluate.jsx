@@ -6,13 +6,13 @@ import axios from "axios"
 export default function Evaluate() {
 
     const { id } = useParams();
-    const [orderId, setorderId] = useState("");
-    const [orderDate, setorderDate] = useState("");
-    const [siteAddress, setsiteAddress] = useState("");
+    const [order_id, setorderId] = useState("");
+    const [order_date, setorderDate] = useState("");
+    const [address, setsiteAddress] = useState("");
     const [budget, setbudget] = useState("");
     const [ comment, setcomment] = useState("");
     const [status, setStatus] = useState("");
-    const [Dstatus, setDStatus] = useState("");
+    const [supplier_status, setDStatus] = useState("");
     const [company, setcompany] = useState("");
     const [depot, setdepot] = useState("");
     const navigate = useNavigate();
@@ -21,13 +21,13 @@ export default function Evaluate() {
     useEffect(() => {
         axios.get("http://localhost:8090/api/v1/d/" + id).then((res) => {
        
-          setorderId(res.data.orderId)
-          setorderDate(res.data.orderDate)
-          setsiteAddress(res.data.siteAddress)
+          setorderId(res.data.order_id)
+          setorderDate(res.data.order_date)
+          setsiteAddress(res.data.address)
           setbudget(res.data.budget)
           setcomment(res.data.comment)
           setStatus(res.data.status)
-          setDStatus(res.data.Dstatus)
+          setDStatus(res.data.supplier_status)
           setcompany(res.data.company)
           setdepot(res.data.depot)
         })
@@ -39,13 +39,13 @@ export default function Evaluate() {
     
           const newAppointment = {
     
-         orderId, 
-         orderDate, 
-         siteAddress, 
+         order_id, 
+         order_date, 
+         address, 
          budget,
          status:'Rejected',
          comment,
-         Dstatus,
+         supplier_status,
          company,
          depot
           }
@@ -66,12 +66,12 @@ export default function Evaluate() {
     
           const newAppointment = {
     
-         orderId, 
-         orderDate, 
-         siteAddress, 
+         order_id, 
+         order_date, 
+         address, 
          budget,
          status:'Accepted',
-         Dstatus,
+         supplier_status,
          company,
          comment,
          depot,
@@ -114,7 +114,7 @@ export default function Evaluate() {
                   <div>
                     <div className="form-group">
                     <label for="email">Order ID</label>
-            <input type="text" value={orderId} className="form-control" id="email" readOnly
+            <input type="text" value={order_id} className="form-control" id="email" readOnly
               onChange={(e) => {
                 setorderId(e.target.value);
               }} required={true} /> 
@@ -127,13 +127,13 @@ export default function Evaluate() {
                   <br/> <br/>
                 
             <label for="email">Order Date</label>
-            <input type="text" value={ orderDate} className="form-control" id="email" readOnly
+            <input type="text" value={ order_date} className="form-control" id="email" readOnly
               onChange={(e) => {
                 setorderId(e.target.value);
               }} required={true} />
             <br/>
             <label for="email">Site Address</label>
-            <input type="text" value={siteAddress} className="form-control" id="email" readOnly
+            <input type="text" value={address} className="form-control" id="email" readOnly
               onChange={(e) => {
                 setorderId(e.target.value);
               }} required={true} />
