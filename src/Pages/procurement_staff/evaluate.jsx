@@ -108,7 +108,7 @@ export default function Evaluate() {
           <h1 class="h3 mb-0 text-gray-800">Evaluate Oders</h1>
           <span></span>
         </div>
-        <hr class="sidebar-divider" />
+
         <div className="row">
           <div className="">
             <br />
