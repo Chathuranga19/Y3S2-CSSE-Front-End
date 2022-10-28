@@ -47,7 +47,7 @@ export default function RequestList(p) {
               <th>Site Address</th>
               <th>Budget</th>
               <th>Status</th>
-              <th>Acction</th>
+              <th>Action</th>
 
             </tr>
 
@@ -64,7 +64,7 @@ export default function RequestList(p) {
                 <td>{val.status}</td>
 
                 <td><a className="btn btn-warning" href={"/evaluate/" + val._id}>
-                  <i className="fas fa-edit"></i>&nbsp;Acction
+                  <i className="fas fa-edit"></i>&nbsp;Action
 
                   </a>
                 </td>

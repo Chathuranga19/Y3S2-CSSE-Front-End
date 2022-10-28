@@ -12,8 +12,11 @@ export default function Evaluate() {
     const [budget, setbudget] = useState("");
     const [ comment, setcomment] = useState("");
     const [status, setStatus] = useState("");
+    const [Dstatus, setDStatus] = useState("");
+    const [company, setcompany] = useState("");
+    const [depot, setdepot] = useState("");
     const navigate = useNavigate();
-
+ 
   
     useEffect(() => {
         axios.get("http://localhost:8090/api/v1/d/" + id).then((res) => {
@@ -24,7 +27,9 @@ export default function Evaluate() {
           setbudget(res.data.budget)
           setcomment(res.data.comment)
           setStatus(res.data.status)
-        
+          setDStatus(res.data.Dstatus)
+          setcompany(res.data.company)
+          setdepot(res.data.depot)
         })
       }, [])
     
@@ -39,8 +44,10 @@ export default function Evaluate() {
          siteAddress, 
          budget,
          status:'Rejected',
-         comment
-    
+         comment,
+         Dstatus,
+         company,
+         depot
           }
           axios.put("http://localhost:8090/api/v1/d/" + id, newAppointment).then((res) => {
             alert(res.data.status);
@@ -63,9 +70,11 @@ export default function Evaluate() {
          orderDate, 
          siteAddress, 
          budget,
-         status:'accepted',
-         comment
-    
+         status:'Accepted',
+         Dstatus,
+         company,
+         comment,
+         depot,
           }
           axios.put("http://localhost:8090/api/v1/d/" + id, newAppointment).then((res) => {
             alert(res.data.status);
