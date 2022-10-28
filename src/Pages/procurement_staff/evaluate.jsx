@@ -16,7 +16,14 @@ export default function Evaluate() {
     const [company, setcompany] = useState("");
     const [depot, setdepot] = useState("");
     const navigate = useNavigate();
- 
+
+    var bgColors = { "Default": "#81b71a",
+    
+    
+    "Gray": "#F4F7FC",
+    "cream": "#FFF4DB",
+  
+};
   
     useEffect(() => {
         axios.get("http://localhost:8090/api/v1/d/" + id).then((res) => {
@@ -90,7 +97,9 @@ export default function Evaluate() {
 
 
   return (
-    <div>
+    <div style={{backgroundColor: bgColors.Gray } }>
+        <br />  <br />   <br /> 
+    <div >
         <form onSubmit={SendData2}> 
 
       <div className="container" >
@@ -101,11 +110,11 @@ export default function Evaluate() {
         </div>
         <hr class="sidebar-divider" />
         <div className="row">
-          <div className="card shadow col-md-8 mx-auto">
+          <div className="">
             <br />
             <div className="card-body">
-               
-              <form>
+            <center>
+              <form style={{backgroundColor: bgColors.cream , width: '700px', height: '350px'} }>
                 <center>
               <table>
                 
@@ -113,7 +122,7 @@ export default function Evaluate() {
                 <div className='row'>
                   <div>
                     <div className="form-group">
-                    <label for="email">Order ID</label>
+                    <label  style={{ width: '260px'} }for="email">Order ID</label>
             <input type="text" value={order_id} className="form-control" id="email" readOnly
               onChange={(e) => {
                 setorderId(e.target.value);
@@ -121,12 +130,12 @@ export default function Evaluate() {
 
 
                 <br/>
-                 <a className="btn btn-warning" href={"/items/" +id}>
-                  <i className="fas fa-edit"></i>&nbsp;Number Of Items
+                 <a className="btn btn-warning"style={{ width: '260px' } } href={"/items/" +id}>
+                  <i className="fas fa-edit" ></i>&nbsp;Number Of Items
                   </a>
                   <br/> <br/>
                 
-            <label for="email">Order Date</label>
+            <label  for="email">Order Date</label>
             <input type="text" value={ order_date} className="form-control" id="email" readOnly
               onChange={(e) => {
                 setorderId(e.target.value);
@@ -157,9 +166,9 @@ export default function Evaluate() {
             <input type="text" value={budget} className="form-control" id="email" readOnly
             />
              <h6 className='text-danger' hidden ={budget<=100000}> Allocated Budget RS:100000 is exeeded   </h6>
-            <br/>
-            <label for="email">Comment</label>
-            <input type="text" value={comment} className="form-control" id="email" 
+            
+            <label style={{ width:'260px',height:'40px'} } for="email"   >Comment</label>
+            <textarea type="text" placeholder="Add Comment" value={comment} className="form-control" id="email" 
               onChange={(e) => {
                 setcomment(e.target.value);
               }} required={true} />
@@ -182,7 +191,7 @@ export default function Evaluate() {
                 
      
               </form>
-             
+              </center>
             </div>
           </div>
         </div>
@@ -196,6 +205,6 @@ export default function Evaluate() {
      
       </form>
     </div>
-    
+    </div>
     )
 }
