@@ -10,8 +10,6 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstRecord = (indexOfLastItem - itemsPerPage) + 1;
-  setindexOfLastItem(indexOfLastItem);
-  setindexOfFirstItem(indexOfLastItem - itemsPerPage);
 
   const changePage = number => {
     if (currentPage === number) return;
@@ -77,6 +75,12 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
   }
 
   useEffect(setLastPageAsCurrent, [pagesCount]);
+
+  useEffect(() => {
+    setLastPageAsCurrent()
+    setindexOfLastItem(indexOfLastItem);
+    setindexOfFirstItem(indexOfLastItem - itemsPerPage);
+}, [pagesCount,indexOfLastItem,indexOfLastItem])
 
   return (
 

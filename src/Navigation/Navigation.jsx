@@ -3,7 +3,7 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import ArrangeOrder from '../Pages/test/SupplierComponent/ArrangeOrderComponent';
+import ArrangeOrder from '../Pages/SupplierComponent/ArrangeOrderComponent';
 import Test from '../Pages/test/Test';
 import Container from '../Components/Container';
 

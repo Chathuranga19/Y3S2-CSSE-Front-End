@@ -3,9 +3,9 @@ import TopNavigation from './Header'
 
 function Container({ data }) {
     return (
-        <body id="page-top">
+        <div id="page-top">
             <div id="wrapper">
-                <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
                         <TopNavigation />
                         {/* Content Route */}
@@ -13,7 +13,7 @@ function Container({ data }) {
                     </div>
                 </div>
             </div>
-        </body>
+        </div>
     )
 }
 
