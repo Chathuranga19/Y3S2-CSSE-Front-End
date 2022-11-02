@@ -27,8 +27,8 @@ function Login() {
                 sessionStorage.setItem("userLoginStorage", JSON.stringify(res.data));
                 if (res.data.userType == 'admin')
                     navigation('/request_list/')
-                if (res.data.userType == 'pharmacist')
-                    navigation('/pharmacy/pharmacy_dashboard')
+                if (res.data.userType == 'supplier')
+                    navigation('/order/deliveryDetails')
                 if (res.data.userType == 'patient')
                     navigation('/patient-home')
                 if (res.data.userType == 'doctor')
