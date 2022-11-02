@@ -123,7 +123,7 @@ const ArrangeOrder = () => {
     }
 
     //filter the data according to the selected order
-    const hanldeCheckboxes = (value) => {
+    const hanldeSelectedOrder = (value) => {
         if (value != '') {
             let sliceList = DataList.slice();
             let selectedRecord = sliceList.filter(item => item._id.toLowerCase() == value.toLowerCase());
@@ -175,7 +175,7 @@ const ArrangeOrder = () => {
             value = '';
         }
         setSelectedValue(value);
-        hanldeCheckboxes(value);
+        hanldeSelectedOrder(value);
     }
 
     //handle selecting company and filter the depots according to that
