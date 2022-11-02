@@ -14,8 +14,8 @@ const ArrangeOrder = () => {
     const [DataList, setDataList] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [indexOfFirstItem, setindexOfFirstItem] = useState(0);
-    const [indexOfLastItem, setindexOfLastItem] = useState(3);
-    const [recordsPerPage] = useState(3);
+    const [indexOfLastItem, setindexOfLastItem] = useState(5);
+    const [recordsPerPage] = useState(5);
     const [retrievedData, setretrievedData] = useState([]);
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -123,7 +123,7 @@ const ArrangeOrder = () => {
     }
 
     //filter the data according to the selected order
-    const hanldeCheckboxes = (value) => {
+    const hanldeSelectedOrder = (value) => {
         if (value != '') {
             let sliceList = DataList.slice();
             let selectedRecord = sliceList.filter(item => item._id.toLowerCase() == value.toLowerCase());
@@ -175,7 +175,7 @@ const ArrangeOrder = () => {
             value = '';
         }
         setSelectedValue(value);
-        hanldeCheckboxes(value);
+        hanldeSelectedOrder(value);
     }
 
     //handle selecting company and filter the depots according to that
@@ -289,7 +289,7 @@ const ArrangeOrder = () => {
                                     Accepted Order Details Unavailable !
                                 </span>
                             )}
-                            
+
                             <Pagination
                                 itemsCount={DataList.length}
                                 itemsPerPage={recordsPerPage}
