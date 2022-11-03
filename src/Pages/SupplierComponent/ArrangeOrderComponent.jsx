@@ -3,17 +3,19 @@ import { ThemeProvider, Table, Row, Col, Button, Form } from "react-bootstrap";
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Pagination from './Pagination';
-import "./style.css";
+import './style.css';
 import ServiceManagement from '../../Axios/supplierManagement';
-import { PDFExport } from "@progress/kendo-react-pdf";
+import { PDFExport } from '@progress/kendo-react-pdf';
+import { GENERATE_CHECKBOX_ID, ALERT_MESSAGE, COMPLETE_STATUS, PENDING_STATUS } from '../../Utils/supplierCommonConstants';
 
 const ArrangeOrder = () => {
 
+    //Initializing variables
     const [DataList, setDataList] = useState([])
     const [currentPage, setCurrentPage] = useState(1);
     const [indexOfFirstItem, setindexOfFirstItem] = useState(0);
-    const [indexOfLastItem, setindexOfLastItem] = useState(3);
-    const [recordsPerPage] = useState(3);
+    const [indexOfLastItem, setindexOfLastItem] = useState(5);
+    const [recordsPerPage] = useState(5);
     const [retrievedData, setretrievedData] = useState([]);
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -40,44 +42,12 @@ const ArrangeOrder = () => {
             //get accepted order details
             ServiceManagement.getAcceptedOrders().then(res => {
 
-                let j = [
-                    {
-                        _id: '122211',
-                        order_id: 1,
-                        name: "Wendall Gripton",
-                        address: "wg@creative.org",
-                        status: "Complete",
-                        company: 100,
-                        depot: "2022-01-26",
-                        budget: 10000
-                    },
-                    {
-                        _id: '24412211',
-                        order_id: 2,
-                        name: "gh Gripton",
-                        address: "wg@creative.org",
-                        status: "Pending",
-                        company: 500,
-                        depot: "2022-01-26",
-                        budget: 33400
-                    },
-                    {
-                        _id: '99803661',
-                        order_id: 3,
-                        name: "rr Gripton",
-                        address: "wg@creative.org",
-                        status: "Pending",
-                        company: 600,
-                        depot: "2022-01-26",
-                        budget: 89000
-                    }
-                ]
                 setDataList(res.data);
                 setretrievedData(res.data);
                 setCount(1);
                 //get first pending record from the list, in order to display that records details in the form window
                 for (let i = 0; i < res.data.length; i++) {
-                    if (res.data[i].supplier_status == "Pending") {
+                    if (res.data[i].supplier_status == PENDING_STATUS) {
                         setSelectedValue(res.data[i]._id);
                         setName(res.data[i].name);
                         setAddress(res.data[i].address);
@@ -126,7 +96,7 @@ const ArrangeOrder = () => {
 
             //data to update
             const data = {
-                supplier_status: 'Complete',
+                supplier_status: COMPLETE_STATUS,
                 company: company,
                 depot: depot
             }
@@ -136,12 +106,12 @@ const ArrangeOrder = () => {
                 setCompanyData(res.data);
             })
 
-            alert('Order delivery details successfully updated!!');
+            alert(ALERT_MESSAGE);
 
             setCompany('');
             setDepot('');
             setGenerateCheck('');
-            document.getElementById('generate').checked = false;
+            document.getElementById(GENERATE_CHECKBOX_ID).checked = false;
             document.getElementById(selectedValue).checked = false;
             provideInvoice(); // call the function that generate invoice
             fetchApprovedOrders();
@@ -153,7 +123,7 @@ const ArrangeOrder = () => {
     }
 
     //filter the data according to the selected order
-    const hanldeCheckboxes = (value) => {
+    const hanldeSelectedOrder = (value) => {
         if (value != '') {
             let sliceList = DataList.slice();
             let selectedRecord = sliceList.filter(item => item._id.toLowerCase() == value.toLowerCase());
@@ -166,11 +136,12 @@ const ArrangeOrder = () => {
         }
     }
 
+    //Conditional Rendering
     //check the first pending order and check the order to display its form window
     if (count == 1) {
         if (DataList.length > 0) {
             for (let i = 0; i < DataList.length; i++) {
-                if (DataList[i].supplier_status == "Pending") {
+                if (DataList[i].supplier_status == PENDING_STATUS) {
                     if (document.getElementById(DataList[i]._id)) {
                         document.getElementById(DataList[i]._id).checked = true;
                         setCount(2);
@@ -181,21 +152,22 @@ const ArrangeOrder = () => {
         }
     }
 
+    //Conditional Rendering
     //set unique list of companies as options in a select 
-    let companyList = companyData.length > 0 && [...new Set(companyData.map(item => item.company))].length > 0
-        && [...new Set(companyData.map(item => item.company))].map((item) => {
+    let companyList = companyData.length > 0 && [...new Set(companyData.map(item => item.company))].length > 0 && (
+        [...new Set(companyData.map(item => item.company))].map((item) => {
             return (
-                <option value={item}>{item}</option>
+                <option key={item} value={item}>{item}</option>
             )
-        });
+        }));
 
     //set depots as options in a select according to selected company
-    let depotsList = filteredDepots.length > 0
-        && filteredDepots.map((item) => {
+    let depotsList = filteredDepots.length > 0 && (
+        filteredDepots.map((item) => {
             return (
-                <option value={item.depot}>{item.depot}</option>
+                <option key={item.depot} value={item.depot}>{item.depot}</option>
             )
-        });
+        }));
 
     //handle dynamic checkboxes functionality
     const selectDelivery = (value, id) => {
@@ -203,7 +175,7 @@ const ArrangeOrder = () => {
             value = '';
         }
         setSelectedValue(value);
-        hanldeCheckboxes(value);
+        hanldeSelectedOrder(value);
     }
 
     //handle selecting company and filter the depots according to that
@@ -236,7 +208,7 @@ const ArrangeOrder = () => {
 
                 <Row style={{ marginTop: '50px' }}>
                     <div style={{ backgroundColor: '#F4F7FC', width: '72.2%', marginLeft: '12px' }} className='box-form'>
-                        <div class="fontuser" style={{ float: 'left', marginLeft: '40px', marginTop: '15px' }}>
+                        <div className="fontuser" style={{ float: 'left', marginLeft: '40px', marginTop: '15px' }}>
 
                             <input className='main-search' placeholder="Search..." type="text" name="search" style={{ width: '400px', height: '40px' }} onChange={(e) => {
                                 handleSearch(e);
@@ -248,7 +220,9 @@ const ArrangeOrder = () => {
                     <Row >
                         <Col xs={9}>
 
-                            {SlicedDataList.length > 0 ?
+                            {/* Conditional rendering checks whether SlicedData length is more than 0, and if it is not return a saying No records found*/}
+
+                            {SlicedDataList.length > 0 ? (
                                 <Table striped borderless hover responsive>
 
                                     <thead style={{ backgroundColor: '#F4F7FC' }}>
@@ -266,36 +240,43 @@ const ArrangeOrder = () => {
                                     <tbody>
                                         {
                                             SlicedDataList && SlicedDataList.map((list) => (
-                                                <tr>
-                                                    <td>
-                                                        {selectedValue != '' ?
+                                                <tr key={list._id + 'A'}>
+                                                    <td key={list._id + 'B'}>
+
+                                                        {/* Conditional Rendering checks whether that a checkbox already selected and if it is not it only renders the Pending order*/}
+                                                        {selectedValue != '' ? (
                                                             list._id === selectedValue && list.supplier_status !== "Complete" ?
-                                                                <input type="checkbox" class="form-check-input" value={list._id} id={list._id} onChange={(e) => { selectDelivery(e.target.value, list._id) }} />
+                                                                <input key={list._id + 'C'} type="checkbox" className="form-check-input" value={list._id} id={list._id} onChange={(e) => { selectDelivery(e.target.value, list._id) }} />
                                                                 :
-                                                                <input type="checkbox" class="form-check-input" value={list._id} id={list._id} disabled />
-                                                            :
-                                                            list.supplier_status === "Complete" ?
-                                                                <input type="checkbox" class="form-check-input" value={list._id} id={list._id} disabled />
-                                                                : <input type="checkbox" class="form-check-input" value={list._id} id={list._id} onChange={(e) => { selectDelivery(e.target.value, list._id) }} />}
+                                                                <input key={list._id + 'C'} type="checkbox" className="form-check-input" value={list._id} id={list._id} disabled />
+                                                        ) :
+                                                            list.supplier_status === "Complete" ? (
+                                                                <input key={list._id + 'D'} type="checkbox" className="form-check-input" value={list._id} id={list._id} disabled />
+                                                            ) : (
+                                                                <input key={list._id + 'D'} type="checkbox" className="form-check-input" value={list._id} id={list._id} onChange={(e) => { selectDelivery(e.target.value, list._id) }} />
+                                                            )}
 
                                                     </td>
-                                                    <td>{list.order_id}</td>
-                                                    <td>{list.name}</td>
-                                                    <td>{list.address}</td>
-                                                    <td>
+                                                    <td key={list._id + 'E'}>{list.order_id}</td>
+                                                    <td key={list._id + 'F'}>{list.name}</td>
+                                                    <td key={list._id + 'G'}>{list.address}</td>
+                                                    <td key={list._id + 'H'}>
+
+                                                        {/* Conditional Rendering to render diffrent styled output depending on the status */}
+
                                                         {list.supplier_status === "Complete" ?
-                                                            <Form.Group className="completed-status" controlId="formBasicCheckbox">
-                                                                <c style={{ color: '#14804A', fontWeight: '500' }}>{list.supplier_status}</c>
+                                                            <Form.Group key={list._id + 'I'} className="completed-status" controlId="formBasicCheckbox">
+                                                                <b key={list._id + 'J'} style={{ color: '#14804A', fontWeight: '500' }}>{list.supplier_status}</b>
                                                             </Form.Group>
-                                                            :
-                                                            <Form.Group className="pending-status" controlId="formBasicCheckbox">
-                                                                <c style={{ color: '#4F5AED', fontWeight: '500' }}>{list.supplier_status} </c>
-                                                            </Form.Group>
-                                                        }
+                                                            : (
+                                                                <Form.Group key={list._id + 'K'} className="pending-status" controlId="formBasicCheckbox">
+                                                                    <b key={list._id + 'L'} style={{ color: '#4F5AED', fontWeight: '500' }}>{list.supplier_status} </b>
+                                                                </Form.Group>
+                                                            )}
 
                                                     </td>
-                                                    <td>{list.company}</td>
-                                                    <td>{list.depot}</td>
+                                                    <td key={list._id + 'M'}>{list.company}</td>
+                                                    <td key={list._id + 'N'}>{list.depot}</td>
                                                 </tr>
                                             ))
                                         }
@@ -303,10 +284,12 @@ const ArrangeOrder = () => {
 
                                     </tbody>
                                 </Table>
-                                : <span style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
+                            ) : (
+                                <span style={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
                                     Accepted Order Details Unavailable !
                                 </span>
-                            }
+                            )}
+
                             <Pagination
                                 itemsCount={DataList.length}
                                 itemsPerPage={recordsPerPage}
@@ -317,10 +300,13 @@ const ArrangeOrder = () => {
                                 alwaysShown={false}
                             />
                         </Col>
-                        {name !== '' && address !== '' ?
+
+                        {/* Conditional Rendering: renders only when a checkbox is selected and values assigned to name and address varaiables */}
+
+                        {name !== '' && address !== '' ? (
                             <Col xs={3}>
-                                <form onSubmit={(e) => deliverGoods(e)} style={{ marginTop: '-73px' }}>
-                                    <Row Style={{ marginTop: '20px' }}>
+                                <form onSubmit={(e) => deliverGoods(e)} style={{ marginTop: '-93px' }}>
+                                    <Row style={{ marginTop: '20px' }}>
                                         <Col>
                                             <div style={{ backgroundColor: '#FFB400', padding: '28px 60px' }} className='box-form'>
                                                 <center style={{ fontWeight: '700', fontSize: '18px' }}>Place Order</center>
@@ -352,7 +338,7 @@ const ArrangeOrder = () => {
                                                                 {depotsList}
                                                             </select>
                                                         </Form.Group><br />
-                                                        <input type="checkbox" class="form-check-input" name="generate check" value="true" id="generate" onChange={(e) => {
+                                                        <input type="checkbox" className="form-check-input" name="generate check" value="true" id="generate" onChange={(e) => {
                                                             if (document.getElementById("generate").checked == false) {
                                                                 e.target.value = "false";
                                                             }
@@ -364,10 +350,12 @@ const ArrangeOrder = () => {
                                                         </span> <br /><br />
 
                                                         <center>
-                                                            {generateCheck == 'true' ?
+                                                            {generateCheck == 'true' ? (
                                                                 <Button id='btn-common' style={{ width: 'auto', backgroundColor: '#FFB400', borderColor: '#FFB400', fontWeight: '550', color: 'black', fontSize: '15px' }} variant="primary" type='submit'>Deliver Now</Button>
 
-                                                                : <Button id='btn-common' style={{ width: 'auto', backgroundColor: '#FFB400', borderColor: '#FFB400', fontWeight: '550', color: 'black', fontSize: '15px' }} variant="primary" type='submit' disabled>Deliver Now</Button>}
+                                                            ) : (
+                                                                <Button id='btn-common' style={{ width: 'auto', backgroundColor: '#FFB400', borderColor: '#FFB400', fontWeight: '550', color: 'black', fontSize: '15px' }} variant="primary" type='submit' disabled>Deliver Now</Button>
+                                                            )}
 
                                                         </center>
                                                     </div>
@@ -379,26 +367,10 @@ const ArrangeOrder = () => {
                                     </Row>
                                 </form ><br />
                             </Col>
-                            : null}
+                        ) : null}
                     </Row>
                 </Row>
-                {/* <PDFExport fileName='Doctor_Activity_Management_Report' ref={pdfExportComponent}>
-                    <>
-                        <Row>
-                        <Col>
-                             <h1 style={{ fontWeight: '60s0', fontSize: '25px' }}>Invoice</h1><br/><br/>
-                             <label style={{ fontWeight: '500', fontSize: '19px' }}>Order ID: </label><b>{invoiceData.order_id}</b><br/>
-                             <label style={{ fontWeight: '500', fontSize: '19px' }}>Invoice date: </label><b>{new Date().toLocaleDateString()}</b><br/>
-                             <label style={{ fontWeight: '500', fontSize: '19px' }}>Address: </label>{invoiceData.address}<br/>
-                             <hr/><br/>
-                             <label style={{ fontWeight: '500', fontSize: '19px' }}>Total: </label>{invoiceData.budget}<br/>
-                             <v>Terms & Condition</v>
 
-                             
-                        </Col>
-                    </Row>
-                    </>
-                </PDFExport> */}
             </div>
         </ThemeProvider >
     )

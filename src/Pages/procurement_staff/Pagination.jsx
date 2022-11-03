@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import {Row, Col } from "react-bootstrap";
 
 const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrentPage, setindexOfLastItem, setindexOfFirstItem, alwaysShown = true }) => {
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
@@ -8,8 +9,7 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
   const isCurrentPageLast = currentPage === pagesCount;
 
   const indexOfLastItem = currentPage * itemsPerPage;
-  setindexOfLastItem(indexOfLastItem);
-  setindexOfFirstItem(indexOfLastItem - itemsPerPage);
+  const indexOfFirstRecord = (indexOfLastItem - itemsPerPage) + 1;
 
   const changePage = number => {
     if (currentPage === number) return;
@@ -67,31 +67,51 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
     return null;
   });
 
+  const lastpage = () => {
+    if (indexOfLastItem > itemsCount) {
+      return itemsCount;
+    }
+    else return indexOfLastItem;
+  }
+
   useEffect(setLastPageAsCurrent, [pagesCount]);
 
+  useEffect(() => {
+    setLastPageAsCurrent()
+    setindexOfLastItem(indexOfLastItem);
+    setindexOfFirstItem(indexOfLastItem - itemsPerPage);
+}, [pagesCount,indexOfLastItem,indexOfLastItem])
+
   return (
+
     <div style={{ marginTop: '10px' }}>
-      <div style={{ float: 'right' }}>
-        Showing {currentPage} to {pagesCount} of {pagesCount} Entities
-      </div>
+      <Row>
+        <Col xs={5}/>
+        <Col>
+          <div style={{color:'grey'}} className="paginationCenter">
+            Showing {indexOfFirstRecord} to {lastpage()} of {itemsCount}
+          </div>
+        </Col>
+        <Col>
+          <div style={{ float: 'right' }}>
 
-      <div className="paginationCenter">
+            {isPaginationShown && (
+              <Pagination>
+                <Pagination.Prev
+                  onClick={onPreviousPageClick}
+                  disabled={isCurrentPageFirst}
+                />
+                {pageNumbers}
+                <Pagination.Next
+                  onClick={onNextPageClick}
+                  disabled={isCurrentPageLast}
+                />
+              </Pagination>
+            )}
 
-        {isPaginationShown && (
-          <Pagination>
-            <Pagination.Prev
-              onClick={onPreviousPageClick}
-              disabled={isCurrentPageFirst}
-            />
-            {pageNumbers}
-            <Pagination.Next
-              onClick={onNextPageClick}
-              disabled={isCurrentPageLast}
-            />
-          </Pagination>
-        )}
-
-      </div>
+          </div>
+        </Col>
+      </Row>
     </div>
 
   );
