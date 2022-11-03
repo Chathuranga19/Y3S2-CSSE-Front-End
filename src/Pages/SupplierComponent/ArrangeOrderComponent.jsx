@@ -4,7 +4,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Pagination from './Pagination';
 import "./style.css";
-import ServiceManagement from '../../../Axios/supplierManagement';
+import ServiceManagement from '../../Axios/supplierManagement';
 import { PDFExport } from "@progress/kendo-react-pdf";
 
 const ArrangeOrder = () => {

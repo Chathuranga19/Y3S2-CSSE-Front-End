@@ -8,7 +8,7 @@ import Items from '../Pages/procurement_staff/items';
 import Login from '../Pages/procurement_staff/login';
 import RequestList from '../Pages/procurement_staff/request_list';
 
-import ArrangeOrder from '../Pages/test/SupplierComponent/ArrangeOrderComponent';
+import ArrangeOrder from '../Pages/SupplierComponent/ArrangeOrderComponent';
 
 import Container from '../Components/Container';
 
