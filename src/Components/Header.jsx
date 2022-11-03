@@ -18,11 +18,11 @@ const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div style={{marginLeft:'720px'}}>
+            <div style={{marginLeft:'470px'}}>
                 <ul className="navbar-nav">
                     <li className="nav-item active">
-                        <a style={{fontWeight:'550'}} className="nav-link" href="#">
-                            Home <span className="sr-only">(current)</span>
+                        <a style={{fontWeight:'550'}} className="nav-link" href="/request_list/">
+                            Home <span className="sr-only"></span>
                         </a>
                     </li>
                     <li style={{fontWeight:'550'}} className="nav-item">

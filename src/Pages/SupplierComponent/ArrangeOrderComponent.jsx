@@ -6,7 +6,7 @@ import Pagination from './Pagination';
 import './style.css';
 import ServiceManagement from '../../Axios/supplierManagement';
 import { PDFExport } from '@progress/kendo-react-pdf';
-import { GENERATE_CHECKBOX_ID, ALERT_MESSAGE, COMPLETE_STATUS, PENDING_STATUS } from '../../Utils/SupplierCommonConstants';
+import { GENERATE_CHECKBOX_ID, ALERT_MESSAGE, COMPLETE_STATUS, PENDING_STATUS } from '../../Utils/supplierCommonConstants';
 
 const ArrangeOrder = () => {
 
