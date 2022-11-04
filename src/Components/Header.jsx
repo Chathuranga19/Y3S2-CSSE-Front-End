@@ -18,7 +18,7 @@ const Navbar = () => {
                 <span className="navbar-toggler-icon"></span>
             </button>
 
-            <div style={{marginLeft:'470px'}}>
+            <div style={{marginLeft:'750px'}}>
                 <ul className="navbar-nav">
                     <li className="nav-item active">
                         <a style={{fontWeight:'550'}} className="nav-link" href="/request_list/">
