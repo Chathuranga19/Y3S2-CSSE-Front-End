@@ -1,4 +1,6 @@
 import axios from "axios";
+
+//base url
 const URL = 'http://localhost:8090/api/v1/';
 
 // get all companies and depots
@@ -16,5 +18,5 @@ const getAcceptedOrders = () => {
     return axios.get(URL + "orders");
 }
 
-
-export default {getCompanies, updateDeliveryDetails, getAcceptedOrders};
+//export the created endpoints
+export default { getCompanies, updateDeliveryDetails, getAcceptedOrders };

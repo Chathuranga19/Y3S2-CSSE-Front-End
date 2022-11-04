@@ -1,6 +1,7 @@
 import React from 'react'
 import TopNavigation from './Header'
 
+//container to act as a compount component which dispalys top navigation with each content
 function Container({ data }) {
     return (
         <div id="page-top">

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
-import {Row, Col } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
+//get props from the component that pagination added in order to update the state in real time
 const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrentPage, setindexOfLastItem, setindexOfFirstItem, alwaysShown = true }) => {
   const pagesCount = Math.ceil(itemsCount / itemsPerPage);
   const isPaginationShown = alwaysShown ? true : pagesCount > 1;
@@ -11,19 +12,23 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstRecord = (indexOfLastItem - itemsPerPage) + 1;
 
+  //change the current page
   const changePage = number => {
     if (currentPage === number) return;
     setCurrentPage(number);
   };
 
+  //trigger when a page number clicked
   const onPageNumberClick = pageNumber => {
     changePage(pageNumber);
   };
 
+  //set previous page
   const onPreviousPageClick = () => {
     changePage(currentPage => currentPage - 1);
   };
 
+  //set next page
   const onNextPageClick = () => {
     changePage(currentPage => currentPage + 1);
   };
@@ -67,6 +72,8 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
     return null;
   });
 
+
+  //set last page
   const lastpage = () => {
     if (indexOfLastItem > itemsCount) {
       return itemsCount;
@@ -74,21 +81,23 @@ const PaginationComponent = ({ itemsCount, itemsPerPage, currentPage, setCurrent
     else return indexOfLastItem;
   }
 
-  useEffect(setLastPageAsCurrent, [pagesCount]);
-
+  //executes first and re-render when mentioned parameters changed
   useEffect(() => {
     setLastPageAsCurrent()
     setindexOfLastItem(indexOfLastItem);
     setindexOfFirstItem(indexOfLastItem - itemsPerPage);
-}, [pagesCount,indexOfLastItem,indexOfLastItem])
+  }, [pagesCount, indexOfLastItem, indexOfLastItem])
 
   return (
 
     <div style={{ marginTop: '10px' }}>
       <Row>
-        <Col xs={5}/>
+        <Col xs={5} />
         <Col>
-          <div style={{color:'grey'}} className="paginationCenter">
+
+          {/* Show total pages and total records of the page out of total */}
+
+          <div style={{ color: 'grey' }} className="paginationCenter">
             Showing {indexOfFirstRecord} to {lastpage()} of {itemsCount}
           </div>
         </Col>

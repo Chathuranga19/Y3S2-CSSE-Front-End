@@ -4,12 +4,6 @@
     box-sizing: border-box;
 }
 
-/* input[type=text],
-input[type=datetime-local],
-textarea {
-    width: 350px;
-} */
-
 .list-title {
     margin-Top: 5% !important;
 }
@@ -20,9 +14,10 @@ textarea {
     border-bottom-right-radius: 10px;
 }
 
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-    background-color:#EBF0FA;
-  }
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+    background-color: #EBF0FA;
+}
 
 .table thead {
     border-bottom: 1px solid grey !important;
@@ -46,8 +41,6 @@ textarea {
     padding: 40px 25px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-
-    /* color:#a5a8c8 */
 }
 
 
@@ -88,9 +81,10 @@ textarea {
     top: 9px;
     color: gray;
 }
-p{
-    max-width:200px;
-    word-wrap:break-word;
+
+p {
+    max-width: 200px;
+    word-wrap: break-word;
 }
 
 .pending-status {
@@ -99,7 +93,7 @@ p{
     padding: 5px 5px;
     border-radius: 20px;
     text-align: center;
-  }
+}
 
 .completed-status {
     background-color: #aae0c5;
